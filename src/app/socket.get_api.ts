@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { dateTimestampProvider } from 'rxjs/internal/scheduler/dateTimestampProvider';
 
-// Definiere, wie deine Nachrichten aussehen
+
+
 export interface ServerEnvelope {
   Type: string;
   Msg: any;

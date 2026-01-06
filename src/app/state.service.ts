@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
 import { SocketService, ServerEnvelope } from './socket.get_api';
+import { Container } from 'pixi.js';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StateService {
   public stations: any[] = []; 
+  public tiles: any[] = [];
+  public users: any[] = [];
+  this.mapContainer = new Container();
 
   constructor(private socketService: SocketService) {
     this.socketService.messages$.subscribe((envelope: ServerEnvelope) => {
@@ -23,6 +27,13 @@ export class StateService {
       case 'game.initialLoad':
         console.log('State: Lade initialen Spielstand', envelope.Msg);
         this.stations = envelope.Msg.Stations || [];
+        this.tiles = envelope.Msg.Tiles || [];
+        this.users = envelope.Msg.Tiles || [];
+
+
+
+        //Map zeichnen
+        drawTiles(this.mapContainer,this);
         break;
         
       case 'station.create':

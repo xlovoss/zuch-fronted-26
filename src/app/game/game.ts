@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild, NgZone, OnDestroy } from '@angular/core';
 import { Application } from 'pixi.js';
-import { StateService } from '../state.service'; // Pfad anpassen falls nötig
+import { StateService } from '../state.service'; 
 
 @Component({
   selector: 'app-game', 
@@ -19,20 +19,6 @@ export class GameComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     this.stateService.initLogin('event_8');
-
-    // 2. Pixi initialisieren
-    this.ngZone.runOutsideAngular(async () => {
-      this.app = new Application();
-      
-      await this.app.init({ 
-        width: 800, 
-        height: 600, 
-        backgroundColor: 0x1099bb 
-      });
-      this.pixiContainer.nativeElement.appendChild(this.app.canvas);
-      
-      console.log("Pixi gestartet");
-    });
   }
 
   ngOnDestroy() {
@@ -40,4 +26,8 @@ export class GameComponent implements OnInit, OnDestroy {
       this.app.destroy(true, { children: true, texture: true });
     }
   }
+}
+
+drawTiles() {
+  
 }
