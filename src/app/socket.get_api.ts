@@ -37,7 +37,7 @@ export class SocketService {
       try {
         const data: ServerEnvelope = JSON.parse(event.data);
 
-        console.log('E:', data.Type, data.Msg);
+       // console.log('E:', data.Type, data.Msg);
 
         this.messages$.next(data);
       } catch (e) {
