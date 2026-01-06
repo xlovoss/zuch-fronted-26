@@ -3,13 +3,13 @@ import { SocketService, ServerEnvelope } from './socket.get_api';
 import { Container } from 'pixi.js';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class StateService {
-  public stations: any[] = []; 
+  public stations: any[] = [];
   public tiles: any[] = [];
   public users: any[] = [];
-  this.mapContainer = new Container();
+  public mapContainer = new Container();
 
   constructor(private socketService: SocketService) {
     this.socketService.messages$.subscribe((envelope: ServerEnvelope) => {
@@ -30,12 +30,10 @@ export class StateService {
         this.tiles = envelope.Msg.Tiles || [];
         this.users = envelope.Msg.Tiles || [];
 
-
-
         //Map zeichnen
-        drawTiles(this.mapContainer,this);
+        // drawTiles(this.mapContainer, this);
         break;
-        
+
       case 'station.create':
         console.log('State: Neue Station', envelope.Msg);
         this.stations.push(envelope.Msg);
