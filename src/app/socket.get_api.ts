@@ -1,27 +1,27 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
-
-
 export interface ServerEnvelope {
   Type: string;
   Msg: any;
 }
 
 @Injectable({
-  providedIn: 'root' 
+  providedIn: 'root',
 })
 export class SocketService {
   private socket: WebSocket | null = null;
-  private readonly URL = 'ws://localhost:8081/ws';
-  
-  
+  private readonly URL = 'ws://localhost:8080/ws';
+
   public messages$ = new Subject<ServerEnvelope>();
 
   constructor() {}
 
   connect(username: string): void {
-    if (this.socket && (this.socket.readyState === WebSocket.OPEN || this.socket.readyState === WebSocket.CONNECTING)) {
+    if (
+      this.socket &&
+      (this.socket.readyState === WebSocket.OPEN || this.socket.readyState === WebSocket.CONNECTING)
+    ) {
       console.log('SocketService: Bereits verbunden. Ignoriere Anfrage.');
       return;
     }
@@ -47,14 +47,13 @@ export class SocketService {
 
     this.socket.onclose = (event) => {
       console.warn(`SocketService: Getrennt (Code ${event.code})`);
-      this.socket = null; 
-      
+      this.socket = null;
+
       setTimeout(() => this.connect(username), 3000);
     };
-    
+
     this.socket.onerror = (error) => {
-        console.error('Socket Fehler:', error);
-       
+      console.error('Socket Fehler:', error);
     };
   }
 }

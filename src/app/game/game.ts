@@ -1,21 +1,18 @@
 import { Component, OnInit, ElementRef, ViewChild, NgZone, OnDestroy } from '@angular/core';
 import { Application } from 'pixi.js';
-import { StateService } from '../state.service'; 
+import { StateService } from '../state.service';
 
 @Component({
-  selector: 'app-game', 
-  standalone: true, 
-  templateUrl: './game.html', 
-  styleUrls: ['./game.css']   
+  selector: 'app-game',
+  standalone: true,
+  templateUrl: './game.html',
+  styleUrls: ['./game.css'],
 })
 export class GameComponent implements OnInit, OnDestroy {
   @ViewChild('pixiContainer', { static: true }) pixiContainer!: ElementRef;
   private app!: Application; // Ausrufezeichen sagt TS: "Ich kümmere mich drum"
 
-  constructor(
-    private stateService: StateService, 
-    private ngZone: NgZone
-  ) {}
+  constructor(private stateService: StateService, private ngZone: NgZone) {}
 
   async ngOnInit() {
    
