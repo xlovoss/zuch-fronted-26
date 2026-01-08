@@ -14,6 +14,7 @@ export class StateService {
   private tiles: Tile[][] = [];
   public tileSubject: ReplaySubject<Tile[][]> = new ReplaySubject<Tile[][]>();
   public users: any[] = [];
+  public payload: any = '';
   
   
   public mapContainer = new Container();
@@ -49,17 +50,17 @@ export class StateService {
         console.log('State: Neue Station', envelope.Msg);
         this.stations.set(envelope.Msg.Id, envelope.Msg);
         this.stationSubject.next(this.stations);
-        this.stations.push(envelope.Msg.Id,envelope.Msg);
+        //this.stations.push(envelope.Msg.Id,envelope.Msg);
         break;
 
      
       case 'train.move':
-        const payload = envelope.Msg;
+         this.payload = envelope.Msg;
         //console.log("E: Train Go", payload);
 
-        if (payload.Waggons && payload.Waggons.length > 0) {
+        if (this.payload.Waggons && this.payload.Waggons.length > 0) {
             
-            const wagonList = payload.Waggons.map((waggon: any, index: number) => {
+            const wagonList = this.payload.Waggons.map((waggon: any, index: number) => {
                 if (!waggon.Position) return null;
                 
                 return {
@@ -71,7 +72,7 @@ export class StateService {
             }).filter((w: any) => w !== null);
 
             const moveData = {
-                id: payload.Id || payload.ID, 
+                id: this.payload.Id || this.payload.ID, 
                 wagons: wagonList
             };
             
